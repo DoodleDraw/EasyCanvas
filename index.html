@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Test</title>
+    <script src="src/easy_canvas.js" type="module"></script>
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+<div id="holder"></div>
+<script type="module">
+    import {EasyStage} from "./src/easy_stage.js";
+
+    const stage = new EasyStage("holder", 800, 600);
+    const mainLayer = stage.getLayer("main");
+
+    const group = mainLayer.addGroup();
+    group.addCircle([-20, -10], 15, {lineColor: '#404040', lineWidth: 3});
+    group.addCircle([20, -10], 15, {lineColor: '#404040', lineWidth: 3});
+    group.addCircle([0, 0], 45, {lineColor: '#404040', lineWidth: 3});
+
+    mainLayer.addLine([[-12, -42], [-25, -60], [-30, -35]], {
+        lineWidth: 3,
+        lineColor: '#404040'
+    });
+
+    mainLayer.addLine([[12, -42], [25, -60], [30, -35]], {
+        lineWidth: 3,
+        lineColor: '#404040'
+    });
+
+    stage.addMouseCallback('mousedown', (position) => {
+        const line = mainLayer.addDrawLine([position], () => {
+        }, {lineWidth: 4});
+    });
+
+</script>
+</body>
+</html>
