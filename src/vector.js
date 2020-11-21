@@ -95,4 +95,45 @@ export class Vector {
         }
         throw new Error("Unsupported dimension");
     }
+
+    /**
+     * 2-dimensional rotation relative to some point |origin| or (0; 0) if not specified
+     * @param v {number[]} - vector to rotate
+     * @param angle {number}
+     * @param origin {number[]?}
+     * @returns {number[]}
+     */
+    static rotate(v, angle, origin) {
+        if (!origin) {
+            return [
+                v[0] * Math.cos(angle) - v[1] * Math.sin(angle),
+                v[0] * Math.sin(angle) + v[1] * Math.cos(angle)
+            ];
+        }
+        return Vector.add(Vector.rotate(Vector.sub(v, origin), angle), origin);
+    }
+
+    /**
+     * 2-dimensional scaling relative to some point |origin| or (0; 0) if not specified
+     * @param v {number[]} - vector to rotate
+     * @param scale {number} - scale factor
+     * @param origin {number[]?}
+     * @returns {number[]}
+     */
+    static scale(v, scale, origin) {
+        if (!origin) {
+            return Vector.mul(v, scale);
+        }
+        return Vector.add(Vector.scale(Vector.sub(v, origin), scale), origin);
+    }
+
+    /**
+     * 2-dimensional direction vector from polar angle
+     * @param angle {number} - polar angle
+     * @returns {number[]} - unary direction
+     */
+    static dirByAngle(angle) {
+        angle = angle / 180 * Math.PI;
+        return [Math.cos(angle), Math.sin(angle)];
+    }
 }
